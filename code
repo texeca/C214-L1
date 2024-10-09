@@ -1,0 +1,48 @@
+// Interface Servico
+public interface Servico {
+    void enviarMensagem(String mensagem);
+}
+
+// Implementação do serviço de email
+public class ServicoEmail implements Servico {
+    @Override
+    public void enviarMensagem(String mensagem) {
+        System.out.println("Enviando email com a mensagem: " + mensagem);
+    }
+}
+
+// Implementação do serviço de SMS
+public class ServicoSMS implements Servico {
+    @Override
+    public void enviarMensagem(String mensagem) {
+        System.out.println("Enviando SMS com a mensagem: " + mensagem);
+    }
+}
+
+// Classe Cliente que depende do Servico
+public class Cliente {
+    private Servico servico;
+
+    // Injeção de dependência via construtor
+    public Cliente(Servico servico) {
+        this.servico = servico;
+    }
+
+    public void enviarMensagem(String mensagem) {
+        servico.enviarMensagem(mensagem);
+    }
+}
+
+// Classe Main para testar
+public class Main {
+    public static void main(String[] args) {
+        // Injeção de dependência manualmente
+        Servico servicoEmail = new ServicoEmail();
+        Cliente cliente1 = new Cliente(servicoEmail);
+        cliente1.enviarMensagem("Olá, esse é um teste de email.");
+
+        Servico servicoSMS = new ServicoSMS();
+        Cliente cliente2 = new Cliente(servicoSMS);
+        cliente2.enviarMensagem("Olá, esse é um teste de SMS.");
+    }
+}
